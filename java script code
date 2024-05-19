@@ -1,0 +1,44 @@
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': 'b45e96323fmshf5e4bc50d3b8a90p1e091djsnfb21cde4eb87',
+        'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+    }
+};
+
+const updateWeatherTable = (city) => {
+    fetch(`https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=${city}`, options)
+        .then(response => response.json())
+        .then((response) => {
+            // Update weather data for the searched city
+            document.getElementById('cityName').textContent = city; // Update city name in the header
+            document.getElementById('temp').textContent = response.temp;
+            document.getElementById('min_temp').textContent = response.min_temp;
+            document.getElementById('max_temp').textContent = response.max_temp;
+            document.getElementById('cloud_pct_temp').textContent = response.cloud_pct;
+            document.getElementById('cloud_pct').textContent = response.cloud_pct;
+            document.getElementById('feels_like').textContent = response.feels_like;
+            document.getElementById('humidity').textContent = response.humidity;
+            document.getElementById('wind_degrees').textContent = response.wind_degrees;
+            document.getElementById('wind_speed').textContent = response.wind_speed;
+            document.getElementById('sunrise').textContent = response.sunrise;
+            document.getElementById('sunset').textContent = response.sunset;
+        })
+        .catch(err => console.error(err));
+};
+
+// Function to handle form submission
+const formSubmitHandler = (e) => {
+    e.preventDefault();
+    const cityInput = document.getElementById('city');
+    const city = cityInput.value.trim();
+    if (city) {
+        updateWeatherTable(city); // Update weather for the entered city
+    }
+};
+
+// Add event listener to the form submission
+document.getElementById('submit').addEventListener('click', formSubmitHandler);
+
+// Initially load weather for Delhi
+updateWeatherTable('Delhi'); // You can change this to any default city you prefer
